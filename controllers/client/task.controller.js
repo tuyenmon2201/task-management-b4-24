@@ -76,3 +76,27 @@ module.exports.detail = async (req, res) => {
         });
     }
 }
+
+module.exports.changeStatus = async (req, res) => {
+    try {
+
+        const id = req.params.id;
+
+        const status = req.body.status;
+
+        await Task.updateOne({
+            _id: id
+        }, {
+            status: status
+        });
+
+        res.json({
+            message: "Cập nhật dữ liệu thành công!"
+        });
+
+    } catch (error) {
+        res.json({
+            message: "Not found"
+        });
+    }
+}
