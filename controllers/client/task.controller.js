@@ -41,6 +41,13 @@ module.exports.index = async (req, res) => {
 
     // End pagination
 
+    // Search
+    if (req.query.keyword) {
+        const regex = new RegExp(req.query.keyword, "i");
+        find.title = regex;
+    }
+    // End search
+
     const tasks = await Task
         .find(find)
         .limit(limitItems)
