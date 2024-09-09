@@ -5,10 +5,15 @@ module.exports.index = async (req, res) => {
         deleted: false
     };
 
+    // Filter by status
+
     const status = req.query.status;
     if(status){
         find.status = status;
     }
+    // End filter by status
+
+    // Sort
 
     const sort = {};
 
@@ -18,10 +23,31 @@ module.exports.index = async (req, res) => {
     if(sortKey && sortValue){
         sort[sortKey] = sortValue;
     }
+    // End sort
 
-    const tasks = await Task.find(find).sort(sort);
+    // Pagination
 
-    console.log(tasks);
+    let limitItems = 2;
+    if(req.query.limitItems){
+        limitItems = parseInt(req.query.limitItems);
+    }
+
+    let page = 1;
+    if(req.query.page){
+        page = parseInt(req.query.page);
+    }
+
+    const skip = (page - 1) * limitItems;
+
+    // End pagination
+
+    const tasks = await Task
+        .find(find)
+        .limit(limitItems)
+        .skip(skip)
+        .sort(sort);
+
+    // console.log(tasks);
 
     res.json(tasks);
 }
