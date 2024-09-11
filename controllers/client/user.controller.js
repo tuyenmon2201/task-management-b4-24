@@ -162,3 +162,18 @@ module.exports.resetPassword = async (req, res) => {
         message: "Đổi mật khẩu thành công!"
     })
 }
+
+module.exports.profile = async (req, res) => {
+    const id = req.params.id;
+
+    const user = await User.findOne({
+        _id: id,
+        deleted: false
+    }).select("-password -token");
+
+    res.json({
+        code: 200,
+        message: "Thành công!",
+        user: user
+    })
+}
