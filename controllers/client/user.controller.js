@@ -144,3 +144,21 @@ module.exports.otpPassword = async (req, res) => {
         token: user.token
     })
 }
+
+module.exports.resetPassword = async (req, res) => {
+    const token = req.body.token;
+    const password = req.body.password;
+
+    await User.updateOne({
+        token: token,
+        deleted: false
+    },
+    {
+        password: md5(password)
+    });
+
+    res.json({
+        code: 200,
+        message: "Đổi mật khẩu thành công!"
+    })
+}
