@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { setting } = require("../../project-management/middlewares/client/setting.middleware");
 // const { Schema } = mongoose;
 
 const taskSchema = new mongoose.Schema ({
