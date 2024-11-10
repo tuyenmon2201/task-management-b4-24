@@ -26,8 +26,8 @@ module.exports.register = async (req, res) => {
         const dataUser = {
             fullName: req.body.fullName,
             email: req.body.email,
-            password: req.body.password,
-            token: md5(token)
+            password: md5(req.body.password),
+            token: token
         };
 
         const user = new User(dataUser);
